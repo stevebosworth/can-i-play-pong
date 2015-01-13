@@ -1,0 +1,20 @@
+{
+  "name": "can-i-play-pong",
+  "version": "0.0.0",
+  "description": "See if anyone is playing ping pong",
+  "main": "app.js",
+  "dependencies": {
+    "johnny-five": "^0.8.37",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "forever": "^0.13.0",
+    "johnny-five": "^0.8.37",
+    "lodash": "^2.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
