@@ -1,9 +1,46 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+var file = './public/data/table.json';
+var key = 'hello';
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  var tableStatus = JSON.parse(fs.readFileSync(file));
+  res.render('index', tableStatus);
+});
+
+router.get('/table', function(req, res) {
+  var tableStatus = JSON.parse(fs.readFileSync(file));
+  res.json(tableStatus);
+});
+
+router.post('/table', function(req, res){
+  console.log('posted!');
+  console.log(req.body);
+  if(!req.body.hasOwnProperty('key') ||
+     !req.body.hasOwnProperty('status')) {
+    res.statusCode = 400;
+    return res.send('Error 400: Post syntax incorrect.');
+  }
+
+  var tableUpdate = req.body;
+
+  if (tableUpdate.key === key) {
+    var str = {};
+    str.status = toBoolean(tableUpdate.status);
+    fs.writeFileSync(file, JSON.stringify(str));
+  }
+
+  function toBoolean(key, value) {
+    if (value) {
+      value = true;
+    } else {
+      value = false;
+    }
+
+    return value;
+  }
 });
 
 module.exports = router;
