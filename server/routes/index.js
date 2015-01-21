@@ -3,6 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var file = './public/data/table.json';
 var key = 'hello';
+var io = require('socket.io');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -17,19 +18,30 @@ router.get('/table', function(req, res) {
 
 router.post('/table', function(req, res){
   console.log('posted!');
-  console.log(req.body);
-  if(!req.body.hasOwnProperty('key') ||
-     !req.body.hasOwnProperty('status')) {
+  // console.log(req.body);
+  var tableUpdate = req.body;
+
+  console.dir(tableUpdate.key);
+  if(!req.body.hasOwnProperty('key') || !req.body.hasOwnProperty('status')) {
     res.statusCode = 400;
     return res.send('Error 400: Post syntax incorrect.');
   }
 
-  var tableUpdate = req.body;
 
   if (tableUpdate.key === key) {
-    var str = {};
-    str.status = toBoolean(tableUpdate.status);
-    fs.writeFileSync(file, JSON.stringify(str));
+    console.log("success");
+    delete tableUpdate.key;
+    console.dir(tableUpdate);
+    // str.status = toBoolean(tableUpdate.status);
+    console.log(tableUpdate.status);
+    fs.writeFileSync(file, JSON.stringify(tableUpdate));
+
+    res.statusCode = 200;
+
+    io.socket.emit('table.update', {
+        hello: 'world'
+    });
+    return res.send('Success!');
   }
 
   function toBoolean(key, value) {
