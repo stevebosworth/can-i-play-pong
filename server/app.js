@@ -1,4 +1,9 @@
 var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,7 +14,6 @@ var routes = require('./routes/index');
 // var users = require('./routes/user');
 // var table = require('./routes/table');
 
-var app = express();
 
 // view engine setup
 
@@ -61,5 +65,16 @@ app.use(function(err, req, res, next) {
     });
 });
 
+server.listen(port, function () {
+  console.log('Server listening at port %d', port);
+});
 
-module.exports = app;
+
+io.on('connection', function(socket) {
+    socket.emit('news', {
+        hello: 'world'
+    });
+    socket.on('my other event', function(data) {
+        console.log(data);
+    });
+});
