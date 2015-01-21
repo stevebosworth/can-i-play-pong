@@ -3,7 +3,6 @@ var router = express.Router();
 var fs = require('fs');
 var file = './public/data/table.json';
 var key = 'hello';
-var io = require('socket.io');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -37,10 +36,6 @@ router.post('/table', function(req, res){
     fs.writeFileSync(file, JSON.stringify(tableUpdate));
 
     res.statusCode = 200;
-
-    io.socket.emit('table.update', {
-        hello: 'world'
-    });
     return res.send('Success!');
   }
 
