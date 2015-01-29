@@ -1,16 +1,19 @@
 var http = require('http');
+var raspi = require('raspi-io');
 var five = require("johnny-five"),
   board, motion;
 var table = {
   "key": "hello", "status": false
 };
 
-board = new five.Board();
+board = new five.Board({
+  io: new raspi()
+});
 
 board.on("ready", function() {
 
   // Create a new `motion` hardware instance.
-  motion = new five.IR.Motion(7);
+  motion = new five.IR.Motion(11);
 
   // Inject the `motion` hardware into
   // the Repl instance's context;
@@ -45,7 +48,7 @@ board.on("ready", function() {
 
 function updateTable(table) {
   var options = {
-    host: 'localhost',
+    host: 'isanyoneplayingpingpong.com',
     port: '3000',
     path: '/table',
     method: 'POST',
