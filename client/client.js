@@ -1,5 +1,6 @@
 var http = require('http');
 var raspi = require('raspi-io');
+var _ = require('lodash');
 var five = require("johnny-five"),
   board, motion;
 var table = {
@@ -32,17 +33,22 @@ board.on("ready", function() {
   // "motionstart" events are fired when the "calibrated"
   // proximal area is disrupted, generally by some form of movement
   motion.on("motionstart", function(err, ts) {
+    var time = new Date(ts * 1000);
+    tableUpdate.timeStamp = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
     table.status = true;
+
     updateTable(table);
-    console.log("motionstart", ts);
+    console.log("motionstart", tableUpdate);
   });
 
   // "motionend" events are fired following a "motionstart" event
   // when no movement has occurred in X ms
   motion.on("motionend", function(err, ts) {
+    var time = new Date(ts * 1000);
+    tableUpdate.timeStamp = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
     table.status = false;
     updateTable(table);
-    console.log("motionend", ts);
+    console.log("motionend", tableUpdate);
   });
 });
 

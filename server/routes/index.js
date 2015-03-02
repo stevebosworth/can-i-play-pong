@@ -30,9 +30,7 @@ router.post('/table', function(req, res){
   if (tableUpdate.key === key) {
     console.log("success");
     delete tableUpdate.key;
-    console.dir(tableUpdate);
-    // str.status = toBoolean(tableUpdate.status);
-    console.log(tableUpdate.status);
+
     fs.writeFileSync(file, JSON.stringify(tableUpdate));
 
     res.statusCode = 200;
