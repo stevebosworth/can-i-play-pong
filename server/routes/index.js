@@ -3,6 +3,8 @@ var router = express.Router();
 var fs = require('fs');
 var file = './public/data/table.json';
 var key = 'hello';
+var lastMotionStart = 0;
+var eventTimeout;
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -31,7 +33,18 @@ router.post('/table', function(req, res){
     console.log("success");
     delete tableUpdate.key;
 
-    fs.writeFileSync(file, JSON.stringify(tableUpdate));
+    if (tableUpdate.eventType === 'start'){
+      clearTimeout(eventTimeout);
+      fs.writeFileSync(file, JSON.stringify(tableUpdate));
+    }
+
+    // only handle end if table after 2 minutes
+    // of no movement
+    if (tableUpdate.eventType === 'end') {
+      eventTimeout.setTimeout(function() {
+        fs.writeFileSync(file, JSON.stringify(tableUpdate));
+      }, 120000);
+    }
 
     res.statusCode = 200;
     return res.send('Success!');

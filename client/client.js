@@ -34,8 +34,9 @@ board.on("ready", function() {
   // proximal area is disrupted, generally by some form of movement
   motion.on("motionstart", function(err, ts) {
     var time = new Date(ts * 1000);
-    tableUpdate.timeStamp = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
+    tableUpdate.formattedTime = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
     table.status = true;
+    table.ts = ts;
 
     updateTable(table);
     console.log("motionstart", tableUpdate);
@@ -45,8 +46,10 @@ board.on("ready", function() {
   // when no movement has occurred in X ms
   motion.on("motionend", function(err, ts) {
     var time = new Date(ts * 1000);
-    tableUpdate.timeStamp = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
+    tableUpdate.formattedTime = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
     table.status = false;
+    table.ts = ts;
+
     updateTable(table);
     console.log("motionend", tableUpdate);
   });
