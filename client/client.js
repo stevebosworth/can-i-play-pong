@@ -33,10 +33,10 @@ board.on("ready", function() {
   // "motionstart" events are fired when the "calibrated"
   // proximal area is disrupted, generally by some form of movement
   motion.on("motionstart", function(err, ts) {
-    var time = new Date(ts * 1000);
-    tableUpdate.formattedTime = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
+    var time = new Date(ts);
+    table.formattedTime = time.getDay() + '-' + time.getMonth() + '-' + time.getFullYear() ' @' + time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
     table.status = true;
-    table.ts = ts;
+    table.ts = time;
 
     updateTable(table);
     console.log("motionstart", tableUpdate);
@@ -45,8 +45,8 @@ board.on("ready", function() {
   // "motionend" events are fired following a "motionstart" event
   // when no movement has occurred in X ms
   motion.on("motionend", function(err, ts) {
-    var time = new Date(ts * 1000);
-    tableUpdate.formattedTime = time.getDay + '-' + time.getMonth + '-' + time.getFullYear ' @' + time.getHours + ':' + time.getMinutes + ':' + time.getSeconds;
+    var time = new Date(ts);
+    table.formattedTime = time.getDay() + '-' + time.getMonth() + '-' + time.getFullYear() ' @' + time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
     table.status = false;
     table.ts = ts;
 

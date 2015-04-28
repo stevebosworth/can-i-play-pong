@@ -1,15 +1,17 @@
 <% include header %>
 
-  <h1>
+  <h1>Is Anyone Playing Ping Pong Right Now?</h1>
+
+  <h2>
     <% if (status) { %>
       Yup
     <% } else { %>
       Nope
     <% } %>
-  </h1>
-
-  <h2>
-    Last Updated: <%= formattedTime %>
   </h2>
+
+  <p>
+    Last update from the table: <%= formattedTime %>
+  </p>
 
 <% include footer %>

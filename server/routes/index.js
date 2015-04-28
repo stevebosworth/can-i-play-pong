@@ -49,16 +49,6 @@ router.post('/table', function(req, res){
     res.statusCode = 200;
     return res.send('Success!');
   }
-
-  function toBoolean(key, value) {
-    if (value) {
-      value = true;
-    } else {
-      value = false;
-    }
-
-    return value;
-  }
 });
 
 module.exports = router;
