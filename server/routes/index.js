@@ -41,7 +41,7 @@ router.post('/table', function(req, res){
     // only handle end if table after 2 minutes
     // of no movement
     if (tableUpdate.eventType === 'end') {
-      eventTimeout.setTimeout(function() {
+      eventTimeout = setTimeout(function() {
         fs.writeFileSync(file, JSON.stringify(tableUpdate));
       }, 120000);
     }
