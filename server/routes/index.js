@@ -43,7 +43,7 @@ router.post('/table', function(req, res){
     if (tableUpdate.eventType === 'end') {
       eventTimeout = setTimeout(function() {
         fs.writeFileSync(file, JSON.stringify(tableUpdate));
-      }, 120000);
+      }, 30000);
     }
 
     res.statusCode = 200;
