@@ -1,4 +1,5 @@
 var express = require('express');
+var debug = require('debug')('expressapp');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -11,8 +12,13 @@ var routes = require('./routes/index');
 
 var app = express();
 
-// view engine setup
+app.set('port', process.env.PORT || 3000);
 
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

@@ -4,6 +4,15 @@ var fs = require('fs');
 var file = './public/data/table.json';
 var key = 'hello';
 
+var io = require('socket.io')();
+
+io.on('connection', function (socket) {
+  socket.emit('status', {hi: 'hello'});
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+
 /* GET home page. */
 router.get('/', function(req, res) {
   var tableStatus = JSON.parse(fs.readFileSync(file));
@@ -16,7 +25,6 @@ router.get('/table', function(req, res) {
 });
 
 router.post('/table', function(req, res){
-  console.log('posted!');
   // console.log(req.body);
   var tableUpdate = req.body;
 
